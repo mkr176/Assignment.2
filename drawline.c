@@ -29,35 +29,71 @@ void set_pixel(SDL_Surface *surface, int x, int y, unsigned int color)
  */
 void draw_line(SDL_Surface *surface, int x1, int y1, int x2, int y2, unsigned int color)
 {
+    // Draws a horizonbtal line from left to right
     if(x1 < x2 && y1 == y2) 
     { 
-        for(x1; x1<x2; x1++) // Draws a horizonbtal line from left to right  
+        for(x1; x1<x2; x1++)  
         {
             set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0));
         }
+    
     }
-        if(x2 < x1 && y1 == y2) 
-        { 
-            for(x2; x2<x1; x2++) // Draws a horizonbtal line from left to right  
-            {
-                set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0));
-            }
-        }  
-
-    if(y1 < y2 && x1 == x2)
-    {         
-        for(y1; y1<y2; y1++) // Draws a vertical line from bottom to top
+    // Draws a horizonbtal line from right to left 
+    else if(x2 < x1 && y1 == y2) 
+    { 
+        for(x1; x2<x1; x1--) 
         {
-           set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0)); 
+            set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0));
+        }
+    }  
+
+    // Draws a vertical line from top to bottom    
+    else if(y1 < y2 && x1 == x2)
+    {         
+        for(y1; y1<y2; y1++) 
+        {
+            set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0)); 
         }
     }
-         if(y2 < y1 && x1 == x2) 
-        { 
-            for(y2; y2<y1; y2++) // Draws a horizonbtal line from top to bottom
+    
+    // Draws a vertical line from bottom to top
+    else if(y2 < y1 && x1 == x2) 
+    { 
+        for(y1; y2<y1; y1--) 
+        {
+            set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0));
+        }
+    }  
+
+    // Draws a diogonally line from top left to bottom right
+    else if( x1 < x2 && y1 < y2)
+    {
+        for(x1; x1<x2; x1++)  
+        {
+            for(y1; y1<x1; y1++) 
             {
                 set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0));
             }
-        }  
+        }
+
+    }
+    
+    // Draws a diogonally line from bottom right to top left
+    else if(x2 < x1 && y2 < y1)
+    {
+        for(x1; x1>x2; x1--)  
+        {
+            for(y1; y1>x1; y1--) 
+            {
+                set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0)); 
+            }
+        }
+
+    }
+    
+    
+
+    
 
 
 
@@ -74,8 +110,8 @@ int main(void)
     const size_t bufsize = 100;
     
     /* Change the screen width and height to your own liking */
-    const int screen_w = 3840;
-    const int screen_h = 1080;
+    const int screen_w = 1024;
+    const int screen_h = 768;
 
     char errmsg[bufsize];
     int done;
@@ -108,18 +144,22 @@ int main(void)
     }
 
     // Example call (horizontal line). Remember to pass surface as first parameter.
-    // The SDL_MapRGB function converts a RGB value to
+    // The SDL_MapRGB function converts a RGB value tSo
     // a 32-bit value (each color is 8 bit)
-    // draw_line(surface, 10, 10, 100, 10, SDL_MapRGB(surface->format, 0, 0xff, 0));
+    //draw_line(surface, 10, 10, 100, 10, SDL_MapRGB(surface->format, 0, 0xff, 0)); // horizonbtal line from left to right
+    //draw_line(surface, 300, 10, 200, 10, SDL_MapRGB(surface->format, 0, 0xff, 0)); // horizonbtal line from right to left
+    
 
-    draw_line(surface, 10, 10, 100, 10, SDL_MapRGB(surface->format, 0, 0xff, 0));
     
     
     // Example Diagonal line, uncomment to draw
-    //draw_line(surface, 10, 10, 100, 100, SDL_MapRGB(surface->format, 0, 0xff, 0));
+    //draw_line(surface, 10, 10, 100, 100, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diogonally line from top left to bottom right
+    //draw_line(surface, 100, 100, 10, 10, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diogonally line from bottom right to top left
+    draw_line(surface, 10, 100, 100, 10, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diagonally line bottom left top dop right
 
     // Example vertical line, uncomment to draw
-    //draw_line(surface, 10, 10, 10, 100, SDL_MapRGB(surface->format, 0, 0, 0xff));
+    //draw_line(surface, 10, 10, 10, 100, SDL_MapRGB(surface->format, 0, 0, 0xff)); // vertical line from top to bottom
+    //draw_line(surface, 10, 300, 10, 200, SDL_MapRGB(surface->format, 0, 0, 0xff)); //vertical line from bottom to top
     
     
     /* Wait for the user to exit the application */
