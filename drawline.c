@@ -91,6 +91,32 @@ void draw_line(SDL_Surface *surface, int x1, int y1, int x2, int y2, unsigned in
 
     }
     
+    // Draws a diogonally line from bottom left to top right
+    else if(x2 > x1 && y2 < y1)
+    {
+        for(x1; x1<x2; x1++)  
+        {
+            
+            {
+                set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0)); 
+            y1--;
+            }
+        }
+
+    }
+    // Draws a diogonally line from top right to bottom left
+    else if(x1 > x2 && y1 < y2)
+    {
+        for(x1; x1>x2; x1--)  
+        {
+            
+            {
+                set_pixel(surface, x1, y1, SDL_MapRGB(surface->format, 0, 0xff, 0)); 
+            y1++;
+            }
+        }
+
+    }
     
 
     
@@ -155,7 +181,8 @@ int main(void)
     // Example Diagonal line, uncomment to draw
     //draw_line(surface, 10, 10, 100, 100, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diogonally line from top left to bottom right
     //draw_line(surface, 100, 100, 10, 10, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diogonally line from bottom right to top left
-    draw_line(surface, 10, 100, 100, 10, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diagonally line bottom left top dop right
+    //draw_line(surface, 10, 100, 100, 10, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diagonally line bottom left top dop right
+    //draw_line(surface, 100, 10, 10, 100, SDL_MapRGB(surface->format, 0, 0xff, 0)); // diagonally line top top right bottom left
 
     // Example vertical line, uncomment to draw
     //draw_line(surface, 10, 10, 10, 100, SDL_MapRGB(surface->format, 0, 0, 0xff)); // vertical line from top to bottom
